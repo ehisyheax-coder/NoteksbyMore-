@@ -74,11 +74,13 @@ const imageWorker = new Worker(new URL('./src/image-worker.js', import.meta.url)
 imageWorker.onmessage = function(e) {
     const { edgeMap, mask, cols, rows } = e.data;
     const edgeMapArray = new Float32Array(edgeMap);
+    // Reconstruct 2D mask from transferred Uint8Array buffer
+    const maskFlat = new Uint8Array(mask);
     const mask2D = [];
     for (let r = 0; r < rows; r++) {
         mask2D[r] = [];
         for (let c = 0; c < cols; c++) {
-            mask2D[r][c] = mask[r * cols + c];
+            mask2D[r][c] = maskFlat[r * cols + c] === 1;
         }
     }
     updateProgress(0.55);
@@ -149,14 +151,16 @@ function refreshMatrix() {
     let rows = Math.floor(cols / aspect);
     rows = Math.max(8, Math.min(120, rows));
     updateProgress(0.05);
+    // Transfer the ArrayBuffer to the worker (zero-copy) to avoid main-thread blocking
+    const buffer = imgData.data.buffer;
     imageWorker.postMessage({
-        imageData: imgData.data,
+        imageData: buffer,
         width: srcW,
         height: srcH,
         cols: cols,
         rows: rows,
         sens: parseInt(objSens.value)
-    });
+    }, [buffer]);
 }
 
 // ===== Update Canvas Size =====

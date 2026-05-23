@@ -134,18 +134,21 @@ function computeForegroundMask(edgeMap, imgData, w, h, cols, rows, sens) {
 
 self.onmessage = function(e) {
     const { imageData, width, height, cols, rows, sens } = e.data;
-    const edgeMap = computeEdgeMap(imageData, width, height);
-    const mask = computeForegroundMask(edgeMap, imageData, width, height, cols, rows, sens);
-    const flatMask = [];
+    // Wrap transferred ArrayBuffer as typed array for indexed pixel access
+    const data = new Uint8ClampedArray(imageData);
+    const edgeMap = computeEdgeMap(data, width, height);
+    const mask = computeForegroundMask(edgeMap, data, width, height, cols, rows, sens);
+    // Pack mask into a Uint8Array so it can be transferred (zero-copy)
+    const flatMask = new Uint8Array(rows * cols);
     for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-            flatMask.push(mask[r][c]);
+            flatMask[r * cols + c] = mask[r][c] ? 1 : 0;
         }
     }
     self.postMessage({
         edgeMap: edgeMap.buffer,
-        mask: flatMask,
+        mask: flatMask.buffer,
         cols,
         rows
-    }, [edgeMap.buffer]);
+    }, [edgeMap.buffer, flatMask.buffer]);
 };
