@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>NoteksbyMore</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="dov" id="dropOverlay"><div class="dtxt">LEPASKAN FOTO DI SINI</div></div>
+<div class="tc" id="toastContainer"></div>
+<div class="ml">
+  <div class="sb">
+    <h2>NoteksbyMore</h2>
+    <p>Stabilisasi kinerja HP & perbaikan </p>
+    <h3>Perbaikan Bug</h3>
+    <ul>
+      <li>Auto-resize max 1024px (Anti Crash)</li>
+      <li>Fix computeLocal</li>
+      <li>Fix Wave Rotation</li>
+      <li>Fix Contrast Stretch</li>
+      <li>Fix Chromatic</li>
+    </ul>
+    <h3>Templat</h3>
+    <div><span class="tag">YUNANI</span><span class="tag">KOTAK</span><span class="tag">CYBER</span><span class="tag">BINNER</span><span class="tag">KATA</span></div>
+    <div class="cl">
+      <h4>RIWAYAT v5.1</h4>
+      <p class="fix">[FIX] Foto > 3000px langsung di-resize (Anti OOM)</p>
+      <p class="fix">[FIX] Freq/Phase array index out of bounds → NaN</p>
+      <p class="fix">[FIX] Wave rotation ctx.fillText di luar save/restore</p>
+      <p class="fix">[FIX] Chromatic composite mode merusak background</p>
+      <p class="fix">[FIX] Contrast stretch pembagian nol</p>
+    </div>
+  </div>
+  <div class="ct">
+    <div class="hd">
+      <h1>NoteksbyMore</h1>
+      <div class="ctrls">
+        <label class="fl" tabindex="0" role="button" aria-label="Upload foto">UPLOAD<input type="file" id="uploadInput" accept="image/*"></label>
+        <select id="ratioSelect" aria-label="Rasio"><option value="auto">Asli</option><option value="1:1">1:1</option><option value="4:5">4:5</option><option value="9:16">9:16</option></select>
+        <div class="sg"><label>KAR</label><input type="text" id="customChars" value="MATRIX_0x5.1_"></div>
+        <div class="sg"><label>RES</label><input type="range" id="resSlider" min="40" max="90" step="5" value="70"><span id="resVal">70</span></div>
+        <div class="sg"><label>OBJ</label><input type="range" id="objSens" min="5" max="250" value="70"><span id="objVal">70</span></div>
+        <div class="sg"><label>EULER</label><input type="range" id="eulerMix" min="0" max="100" value="60"><span id="mixVal">60</span></div>
+        <div class="sg"><label>KONTRAS</label><input type="range" id="contrastSlider" min="60" max="180" value="120"><span id="contrastVal">120</span></div>
+        <div class="sg"><label>GLOW</label><input type="range" id="glowSlider" min="0" max="12" value="4"></div>
+        <div class="sg"><label>GELOMBANG</label><input type="range" id="waveSlider" min="0" max="100" value="40"></div>
+        <select id="themeSelect" aria-label="Tema"><option value="cyberpunk">Cyberpunk 3D</option><option value="original">Warna Asli</option><option value="green">Hijau</option><option value="cyan">Cyan</option><option value="amber">Amber</option><option value="neon">Neon</option></select>
+        <select id="bgModeSelect" aria-label="Background"><option value="rain">Matrix Rain</option><option value="noise">Perlin Noise</option><option value="none">Kosong</option></select>
+        <div class="sg"><label>BG</label><input type="range" id="bgIntensity" min="0" max="100" value="45"><span id="bgIntVal">45</span></div>
+        <button id="randomBtn">RANDOM</button>
+        <button id="recordBtn">RECORD</button>
+        <button id="downloadBtn">SIMPAN</button>
+      </div>
+    </div>
+    <div class="prog"><div class="prog-bar" id="progressBar"></div></div>
+    <div class="ca">
+      <div class="cb"><h3>FOTO ASLI</h3><div class="cw"><canvas id="sourceCanvas"></canvas></div></div>
+      <div class="cb"><h3>HASIL DIGITAL ART</h3><div class="cw" id="artCanvasWrapper" style="position:relative"><canvas id="artCanvas"></canvas><button class="mask-toggle" id="maskToggle">LIHAT MASK</button></div></div>
+    </div>
+    <div class="info">Auto-Resize + NaN Fix + Chromatic 3D + Wave Animation</div>
+  </div>
+</div>
+<script type="module" src="/main.js"></script>
+</body>
+</html>
